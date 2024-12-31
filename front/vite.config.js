@@ -11,6 +11,7 @@ export default defineConfig({
     vueDevTools(),
   ],
   server:{
+    host:'test.local',
     port:3000
   },
   resolve: {
