@@ -24,6 +24,7 @@ class TenantsAndDomainsSeeder extends Seeder
 
         // Create domains
         $domains = [
+            // Existing local domains
             [
                 'domain' => 'foo.test.local',
                 'tenant_id' => 1,
@@ -31,19 +32,20 @@ class TenantsAndDomainsSeeder extends Seeder
             [
                 'domain' => 'bar.test.local',
                 'tenant_id' => 2,
+            ],
+            // New EC2 IP-based domains
+            [
+                'domain' => 'foo.3.250.89.236',
+                'tenant_id' => 1,
+            ],
+            [
+                'domain' => 'bar.3.250.89.236',
+                'tenant_id' => 2,
             ]
         ];
 
         foreach ($domains as $domain) {
-            DB::table('domains')
-                ->updateOrInsert(
-                    ['domain' => $domain['domain']], // The unique identifier
-                    [
-                        'tenant_id' => $domain['tenant_id'],
-                        'created_at' => now(),
-                        'updated_at' => now()
-                    ]
-                );
+            DB::table('domains')->insertOrIgnore($domain);
         }
     }
 }
